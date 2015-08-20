@@ -42,6 +42,8 @@
 		9EFA4DAFFF75383FDF3D44CE8815CB10 /* SSHolidayHK.m in Sources */ = {isa = PBXBuildFile; fileRef = 400A923D0F9B07EF77ECB9D4F3829DCF /* SSHolidayHK.m */; };
 		A10EE67B4C15C7F28B58A8DCEB87662F /* FSCalendar+IBExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 4BE50E0D01E9633F796EC41B649FE83D /* FSCalendar+IBExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A52D92402A618AB6B6F27B244C7BDF2C /* SSHolidayChina.m in Sources */ = {isa = PBXBuildFile; fileRef = 763F5A8E53435056AB34EAF0E7EE4E7A /* SSHolidayChina.m */; };
+		A8040CEB1B85584D00C7942E /* FSCalendarHeatmapHeader.h in Headers */ = {isa = PBXBuildFile; fileRef = A8040CE91B85584D00C7942E /* FSCalendarHeatmapHeader.h */; };
+		A8040CEC1B85584D00C7942E /* FSCalendarHeatmapHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A8040CEA1B85584D00C7942E /* FSCalendarHeatmapHeader.m */; };
 		A8388D7E2813759941062CD7B0344DE5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AA1D8123C90631E7766B49E25F0DD13 /* Foundation.framework */; };
 		A8A64C228E0AA175D3E24FF09E604E5A /* FSCalendarHeaderTouchDeliver.h in Headers */ = {isa = PBXBuildFile; fileRef = BE9915E76D7734E8D2616F671C9AD2A7 /* FSCalendarHeaderTouchDeliver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AA2220910C4E938B0D4C228ADE9AB965 /* SSLunarDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBDEF2E5AA558C5FFF24E95BE8368BF /* SSLunarDateFormatter.m */; };
@@ -154,6 +156,8 @@
 		9FE15511BEF284B4BEB133DB1D5D2434 /* SSHolidayCountry.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SSHolidayCountry.m; path = SSLunarDate/SSHolidayCountry.m; sourceTree = "<group>"; };
 		A574343430A109A69E1CF238E74550C8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		A748BA4A97D780B42BB0C6DAA15573F6 /* SSHolidayChina.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSHolidayChina.h; path = SSLunarDate/SSHolidayChina.h; sourceTree = "<group>"; };
+		A8040CE91B85584D00C7942E /* FSCalendarHeatmapHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarHeatmapHeader.h; sourceTree = "<group>"; };
+		A8040CEA1B85584D00C7942E /* FSCalendarHeatmapHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarHeatmapHeader.m; sourceTree = "<group>"; };
 		A860265F850C40D093C7B365BEFD71EE /* Pods-FSCalendar-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FSCalendar-acknowledgements.plist"; sourceTree = "<group>"; };
 		AA257D2ADC3A784A754182112B65C261 /* FSCalendar-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "FSCalendar-Private.xcconfig"; sourceTree = "<group>"; };
 		AB34A5A6AD9D1256E9F0E32C2457957F /* Pods-FSCalendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FSCalendar.debug.xcconfig"; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				4596A63ED62115D6B481720152C44FBE /* NSDate+FSExtension.m */,
 				92AA7CADE131EAD474639329A0255EBF /* UIView+FSExtension.h */,
 				4295A9E72D3CFA88DF3553ACD793661B /* UIView+FSExtension.m */,
+				A8040CE91B85584D00C7942E /* FSCalendarHeatmapHeader.h */,
+				A8040CEA1B85584D00C7942E /* FSCalendarHeatmapHeader.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -480,6 +486,7 @@
 				BFAE95D4CE9EF79D6EA84293702D4641 /* FSCalendarDynamicHeader.h in Headers */,
 				38B559FBA08F7912EDE836DFA3DC6C3B /* FSCalendarHeader.h in Headers */,
 				A8A64C228E0AA175D3E24FF09E604E5A /* FSCalendarHeaderTouchDeliver.h in Headers */,
+				A8040CEB1B85584D00C7942E /* FSCalendarHeatmapHeader.h in Headers */,
 				C59AF3FECCE8EB13A72FA0CADA3A7EC0 /* NSDate+FSExtension.h in Headers */,
 				D6B0DD5728B0839AAC6CF3711ED243D7 /* UIView+FSExtension.h in Headers */,
 			);
@@ -635,6 +642,7 @@
 				BA3794307316FB2913212B119E7BFFC2 /* FSCalendar.m in Sources */,
 				FCA27053ED539D1387BD55125DABAB7C /* FSCalendarAppearance.m in Sources */,
 				FB0A8E4B9AE19C749D923B414C1780C1 /* FSCalendarCell.m in Sources */,
+				A8040CEC1B85584D00C7942E /* FSCalendarHeatmapHeader.m in Sources */,
 				55C10532B5D5576B77C9F4142F038752 /* FSCalendarHeader.m in Sources */,
 				8D8435480F7125E288A81AE8B458CB4F /* FSCalendarHeaderTouchDeliver.m in Sources */,
 				FBFF02AD04D593EB030686C45847BEAB /* NSDate+FSExtension.m in Sources */,

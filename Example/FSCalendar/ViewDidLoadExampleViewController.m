@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    FSCalendar *calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 300)];
+    FSCalendar *calendar = [[FSCalendar alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 300) headerType:FSCalendarHeaderTypeHeatmap];
     calendar.dataSource = self;
     calendar.delegate = self;    
 //    calendar.flow = FSCalendarFlowVertical;

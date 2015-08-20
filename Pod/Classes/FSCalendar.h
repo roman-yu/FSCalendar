@@ -16,6 +16,10 @@ typedef NS_ENUM(NSInteger, FSCalendarFlow) {
     FSCalendarFlowHorizontal
 };
 
+typedef NS_ENUM(NSInteger, FSCalendarHeaderType) {
+    FSCalendarHeaderTypeDefault,
+    FSCalendarHeaderTypeHeatmap
+};
 
 typedef NS_ENUM(NSInteger, FSCalendarCellState) {
     FSCalendarCellStateNormal      = 0,
@@ -64,6 +68,8 @@ IB_DESIGNABLE
 @property (readonly, nonatomic) FSCalendarAppearance *appearance;
 @property (readonly, nonatomic) NSDate *minimumDate;
 @property (readonly, nonatomic) NSDate *maximumDate;
+
+- (instancetype)initWithFrame:(CGRect)frame headerType:(FSCalendarHeaderType)headerType;
 
 - (void)reloadData;
 - (void)setSelectedDate:(NSDate *)selectedDate animate:(BOOL)animate;

@@ -16,12 +16,14 @@
 
 #import "FSCalendarHeaderTouchDeliver.h"
 
-#define kDefaultHeaderHeight 40
+#import "FSCalendarHeatmapHeader.h"
+
+#define kDefaultHeaderHeight 70
 #define kWeekHeight roundf(self.fs_height/12)
 
 static BOOL FSCalendarInInterfaceBuilder = NO;
 
-@interface FSCalendar (DataSourceAndDelegate)
+@interface FSCalendar (DataSourceAndDelegate) <FSCalendarHeatmapHeaderDelegate>
 
 - (BOOL)hasEventForDate:(NSDate *)date;
 - (NSString *)subtitleForDate:(NSDate *)date;
@@ -47,13 +49,16 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
 @property (weak  , nonatomic) CALayer                    *bottomBorderLayer;
 @property (weak  , nonatomic) UICollectionView           *collectionView;
 @property (weak  , nonatomic) UICollectionViewFlowLayout *collectionViewFlowLayout;
-@property (weak  , nonatomic) FSCalendarHeader           *header;
+//@property (weak  , nonatomic) FSCalendarHeader           *header;
+@property (weak  , nonatomic) UIView                     *header;
 @property (weak  , nonatomic) FSCalendarHeaderTouchDeliver *deliver;
 
 @property (strong, nonatomic) NSCalendar                 *calendar;
 @property (assign, nonatomic) BOOL                       supressEvent;
 
 @property (assign, nonatomic) BOOL                       needsAdjustingMonthPosition;
+
+@property (assign, nonatomic) FSCalendarHeaderType       headerType;
 
 - (void)orientationDidChange:(NSNotification *)notification;
 
@@ -81,6 +86,17 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _headerType = FSCalendarHeaderTypeDefault;
+        [self initialize];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame headerType:(FSCalendarHeaderType)headerType
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _headerType = headerType;
         [self initialize];
     }
     return self;
@@ -122,13 +138,23 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
     _flow         = FSCalendarFlowHorizontal;
     _firstWeekday = [_calendar firstWeekday];
     
-    FSCalendarHeader *header = [[FSCalendarHeader alloc] initWithFrame:CGRectZero];
-    header.appearance = _appearance;
-    [self addSubview:header];
-    self.header = header;
+    UIView *header = nil;
+    if (_headerType == FSCalendarHeaderTypeDefault) {
+        header = [[FSCalendarHeader alloc] initWithFrame:CGRectZero];
+        ((FSCalendarHeader *)header).appearance = _appearance;
+        [self addSubview:header];
+        self.header = header;
+    } else {
+        header = [[FSCalendarHeatmapHeader alloc] initWithDate:[NSDate date]];
+        ((FSCalendarHeatmapHeader *)header).delegate = self;
+        [self addSubview:header];
+        self.header = header;
+    }
     
     FSCalendarHeaderTouchDeliver *deliver = [[FSCalendarHeaderTouchDeliver alloc] initWithFrame:CGRectZero];
-    deliver.header = header;
+    if ([header isKindOfClass:[FSCalendarHeader class]]) {
+        deliver.header = ((FSCalendarHeader *)header);
+    }
     deliver.calendar = self;
     [self addSubview:deliver];
     self.deliver = deliver;
@@ -185,6 +211,8 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
     _supressEvent = YES;
     CGFloat padding = self.fs_height * 0.01;
     _header.frame = CGRectMake(0, 0, self.fs_width, _headerHeight == -1 ? kDefaultHeaderHeight : _headerHeight);
+    _header.backgroundColor = [UIColor orangeColor];
+    _header.userInteractionEnabled = YES;
     _deliver.frame = _header.frame;
     
     _collectionView.frame = CGRectMake(0, kWeekHeight+_header.fs_height, self.fs_width, self.fs_height-kWeekHeight-_header.fs_height);
@@ -324,7 +352,9 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
     } else if (_flow == FSCalendarFlowVertical) {
         scrollOffset = scrollView.contentOffset.y/scrollView.fs_height;
     }
-    _header.scrollOffset = scrollOffset;
+    if ([_header isKindOfClass:[FSCalendarHeader class]]) {
+        ((FSCalendarHeader *)_header).scrollOffset = scrollOffset;
+    }
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
@@ -379,7 +409,9 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
         _supressEvent = YES;
         NSDate *currentMonth = self.currentMonth;
         _collectionViewFlowLayout.scrollDirection = (UICollectionViewScrollDirection)flow;
-        _header.scrollDirection = _collectionViewFlowLayout.scrollDirection;
+        if ([_header isKindOfClass:[FSCalendarHeader class]]) {
+            ((FSCalendarHeader *)_header).scrollDirection = _collectionViewFlowLayout.scrollDirection;
+        }
         [self layoutSubviews];
         [self reloadData];
         [self scrollToDate:currentMonth];
@@ -503,7 +535,9 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
 {
     if (![_calendar.locale isEqual:locale]) {
         _calendar.locale = locale;
-        _header.dateFormatter.locale = locale;
+        if ([_header isKindOfClass:[FSCalendarHeader class]]) {
+            ((FSCalendarHeader *)_header).dateFormatter.locale = locale;
+        }
         [self reloadData];
     }
 }
@@ -520,8 +554,10 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
     _minimumDate = self.minimumDateForCalendar;
     _maximumDate = self.maximumDateForCalendar;
     
-    _header.scrollDirection = self.collectionViewFlowLayout.scrollDirection;
-    [_header reloadData];
+    if ([_header isKindOfClass:[FSCalendarHeader class]]) {
+        ((FSCalendarHeader *)_header).scrollDirection = self.collectionViewFlowLayout.scrollDirection;
+        [((FSCalendarHeader *)_header) reloadData];
+    }
     
     [_weekdays setValue:[UIFont systemFontOfSize:_appearance.weekdayTextSize] forKey:@"font"];
     CGFloat width = self.fs_width/_weekdays.count;
@@ -579,7 +615,9 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
         [_collectionView setContentOffset:CGPointMake(0, scrollOffset * _collectionView.fs_height) animated:animate];
     }
     if (_header && !animate) {
-        _header.scrollOffset = scrollOffset;
+        if ([_header isKindOfClass:[FSCalendarHeader class]]) {
+            ((FSCalendarHeader *)_header).scrollOffset = scrollOffset;
+        }
     }
     _supressEvent = NO;
 }
@@ -696,6 +734,16 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
         _maximumDate = [NSDate fs_dateWithYear:2099 month:12 day:31];
     }
     return _maximumDate;
+}
+
+#pragma mark - BDHeatmapCalendarHeaderDelegate
+
+- (void)calendarHeatmapHeaderDidSelectToday:(FSCalendarHeatmapHeader *)header {
+    [self scrollToDate:[NSDate date] animate:YES];
+}
+
+- (void)calendarHeatmapHeader:(FSCalendarHeatmapHeader *)header selectMonth:(NSDate *)date {
+    [self scrollToDate:date animate:YES];
 }
 
 @end
