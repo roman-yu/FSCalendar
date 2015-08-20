@@ -211,7 +211,6 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
     _supressEvent = YES;
     CGFloat padding = self.fs_height * 0.01;
     _header.frame = CGRectMake(0, 0, self.fs_width, _headerHeight == -1 ? kDefaultHeaderHeight : _headerHeight);
-    _header.backgroundColor = [UIColor orangeColor];
     _header.userInteractionEnabled = YES;
     _deliver.frame = _header.frame;
     

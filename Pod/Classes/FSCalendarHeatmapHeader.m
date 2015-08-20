@@ -64,10 +64,19 @@ static const CGFloat buttonSize = 40.0;
     self.dateLabel.frame = CGRectMake(30, 15, 100, 40);
     
     self.nextMonthButton.frame = CGRectMake(self.frame.size.width - 30 - buttonSize, 15, buttonSize, buttonSize);
+    self.nextMonthButton.layer.cornerRadius = buttonSize / 2;
+    self.nextMonthButton.layer.borderWidth = 1.0;
+    self.nextMonthButton.layer.borderColor = [UIColor blackColor].CGColor;
     
     self.prevMonthButton.frame = CGRectMake(self.nextMonthButton.frame.origin.x - horiMargin - buttonSize, 15, buttonSize, buttonSize);
+    self.prevMonthButton.layer.cornerRadius = buttonSize / 2;
+    self.prevMonthButton.layer.borderWidth = 1.0;
+    self.prevMonthButton.layer.borderColor = [UIColor blackColor].CGColor;
     
     self.todayButton.frame = CGRectMake(self.prevMonthButton.frame.origin.x - horiMargin - 80, 15, 80, buttonSize);
+    self.todayButton.layer.cornerRadius = buttonSize / 2;
+    self.todayButton.layer.borderWidth = 1.0;
+    self.todayButton.layer.borderColor = [UIColor blackColor].CGColor;
 }
 
 - (void)gotoToday:(id)sender {
