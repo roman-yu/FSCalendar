@@ -151,13 +151,13 @@ static BOOL FSCalendarInInterfaceBuilder = NO;
         self.header = header;
     }
     
-    FSCalendarHeaderTouchDeliver *deliver = [[FSCalendarHeaderTouchDeliver alloc] initWithFrame:CGRectZero];
     if ([header isKindOfClass:[FSCalendarHeader class]]) {
+        FSCalendarHeaderTouchDeliver *deliver = [[FSCalendarHeaderTouchDeliver alloc] initWithFrame:CGRectZero];
         deliver.header = ((FSCalendarHeader *)header);
+        deliver.calendar = self;
+        [self addSubview:deliver];
+        self.deliver = deliver;
     }
-    deliver.calendar = self;
-    [self addSubview:deliver];
-    self.deliver = deliver;
     
     UICollectionViewFlowLayout *collectionViewFlowLayout = [[UICollectionViewFlowLayout alloc] init];
     collectionViewFlowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
